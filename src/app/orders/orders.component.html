@@ -1,0 +1,77 @@
+<br>
+<mat-toolbar class="ordersToolbar" color="primary">
+	<p>Customer Order System</p>
+  <span class="fill-remaining-space"></span>
+  <button class="add-order-button" mat-icon-button matTooltip="Add"
+  (click)="addNewOrder()">
+	<mat-icon>add
+	</mat-icon>
+  </button>
+	<button mat-icon-button matTooltip="Options"
+  [matMenuTriggerFor]="optionsMenu">
+	<mat-icon>menu
+	</mat-icon>
+  </button>
+  <mat-menu #optionsMenu="matMenu">
+  <button (click)="sortByOrderNumber()" 
+  mat-menu-item>Sort by Order Number</button>
+  <button (click)="sortByPrice()"
+  mat-menu-item>Sort by Price</button>
+</mat-menu>
+</mat-toolbar>
+
+<section>
+
+	<div class="floating-box" *ngFor="let order of orders">
+		<mat-card>
+			<mat-card-header>
+				<mat-card-title>Order #{{order.id}}
+				</mat-card-title>
+			</mat-card-header>
+			<mat-card-content>
+				<table mat-table class="order-details">
+					<tr>
+						<th>Customer</th>
+						<td>{{order.customerName}}</td>
+					</tr>
+					<tr>
+						<th>Product code</th>
+						<td>{{order.productCode}}</td>
+					</tr>
+					<tr>
+						<th>Units ordered</th>
+						<td>{{order.unitsOrdered}}</td>
+					</tr>
+					<tr>
+						<th>Unit price (USD)</th>
+						<td>{{order.unitPrice}}</td>
+					</tr>
+					<tr>
+						<th>Status</th>
+						<td>{{order.status}}</td>
+					</tr>
+          <tr>
+						<th>Created</th>
+						<td>{{order.createdAt.toLocaleString('en-GB')}}</td>
+					</tr>
+          <tr>
+						<th>Updated</th>
+						<td>{{order.updatedAt.toLocaleString('en-GB')}}</td>
+					</tr>
+				</table>
+			</mat-card-content>
+			<mat-card-actions>
+				<button mat-icon-button matTooltip="Edit"
+        [routerLink]="['/edit', order.id]">
+      <mat-icon>edit
+        </mat-icon>
+      </button>
+				<button mat-icon-button matTooltip="Delete"
+        (click)="onDelete(order.id)">
+      <mat-icon>delete
+        </mat-icon>
+        </button>
+			</mat-card-actions>
+		</mat-card>
+	</div>
+</section>

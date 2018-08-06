@@ -1,0 +1,18 @@
+<p>
+This is my attempt to follow the steps in the 
+<a href="https://stackblitz.com/edit/angular-codelabs-sheetsapi">Codelabs Google Sheets-API Tutorial.</a> The tutorial teaches how to use the Google Sheets-API to read Google Docs spreadsheets from a web application. It is based around Node, Express and Javascript but I think Stackblitz, Angular and Typescript are much cooler so I wanted to use these technologies while going through the tutorial.
+</p>
+<p>
+The tutorial uses an SQL database which is accessed via the npm package sqlite3. I tried using this but as far as I could tell it only works from within Node and not on the client-side. So I couldn't use it in Stackblitz as there is no Node server side so instead I used the npm package <a href="https://github.com/agershun/alasql">Alasql</a> which does work on the client side. It took a certain amount of tinkering to get it to work and the section 
+<a routerLink="/alasql-demo" routerLinkActive="active">
+		AlaSql Demo</a>
+ shows some simple examples of what works.
+</p>
+<p>
+I've actually had to abandon doing this in Stackblitz because, as far as I can tell, there is a fundamental security flaw with it. To use Google API's OAuth, you need to use a client secret key. When a user grants the app permission to access his/her personal data on Google Sheets, anyone with that secret key would be able to access that person's data in their own app. In Stackblitz, the secret key will always be visible to everyone because anyone can go in and view the source code. In an application built in VS Code on a local computer, the secret key would be kept hidden from the outside world and presumably would have to be excluded in any output to git. But I don't see how it would be possible in Stackblitz to keep the secret key secret.
+</p>
+<p>
+Instead, perhaps the way forward is to use Google Apps Script and the tool clasp which, as far as I can tell (I haven't tried it yet) allows you to write Typescript code and upload it to Google Apps Script. For Google Apps Script, I think, the secret key and other authorisation codes are kept behind the scenes and even the writer of the app script doesn't see it. 
+</p>
+<p>I think that Stackblitz would be fine for instances where a Google Drive document or sheet that is shared with everyone needs to be accessed.
+</p>

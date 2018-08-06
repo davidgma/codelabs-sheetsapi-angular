@@ -1,0 +1,17 @@
+<p></p>
+<div class="mdl-grid" *ngIf="comments">
+	<section id="orders" class="mdl-cell mdl-cell--8-col relative" *ngFor="let comment of comments">
+		<div class="mdl-grid">
+			{{ comment }}
+		</div>
+	</section>
+
+</div>
+<p>Cities:</p>
+<div class="mdl-grid" *ngIf="cities">
+	<section id="cities" class="mdl-cell mdl-cell--8-col relative" *ngFor="let city of cities">
+		<div class="mdl-grid">
+			{{ city }}
+		</div>
+	</section>
+</div>

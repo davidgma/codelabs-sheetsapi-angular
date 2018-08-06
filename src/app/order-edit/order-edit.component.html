@@ -1,0 +1,40 @@
+<br>
+<mat-toolbar color="primary">
+	<p>Edit order #{{order.id}}</p>
+</mat-toolbar>
+<br>
+<section>
+	<div class="floating-box">
+		<mat-card>
+			<form>
+				<mat-form-field>
+					<input matInput placeholder="Customer Name" [(ngModel)]="editedOrder.customerName" name="customerName">
+				</mat-form-field>
+				<mat-form-field>
+					<input matInput placeholder="Product Code" [(ngModel)]="editedOrder.productCode" name="productCode">
+				</mat-form-field>
+				<mat-form-field class="full-width">
+					<input matInput placeholder="Units Ordered" [(ngModel)]="editedOrder.unitsOrdered" name="unitsOrdered">
+				</mat-form-field>
+				<mat-form-field class="full-width">
+					<input matInput placeholder="Unit Price" [(ngModel)]="editedOrder.unitPrice" name="unitPrice">
+				</mat-form-field>
+				<mat-form-field class="full-width">
+					<input matInput placeholder="Status" [(ngModel)]="editedOrder.status" name="status">
+				</mat-form-field>
+			</form>
+			<mat-card-actions>
+				<button (click)="onSubmit()" mat-button matTooltip="Save"
+        [routerLink]="['/orders']">
+      <mat-icon>save
+        </mat-icon>
+      </button>
+      <button mat-button matTooltip="Cancel" 
+      [routerLink]="['/orders']">
+      <mat-icon>cancel
+        </mat-icon>
+      </button>
+			</mat-card-actions>
+		</mat-card>
+	</div>
+</section>

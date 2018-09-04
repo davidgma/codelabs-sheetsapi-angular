@@ -4,7 +4,7 @@ import { Router,
 import * as alasql from 'alasql';
 import { Observable } from "rxjs";
 //import { parse } from 'alasql';
-import { DataService } from '../data.service';
+import { DataService } from '../services/data.service';
 
 @Component({
   //selector: 'app-alasql-demo',

@@ -24,6 +24,8 @@
     "@angular/router": "^6.1.0",
     "alasql": "^0.4.9",
     "core-js": "^2.5.4",
+    "google-auth-library": "^1.6.1",
+    "googleapis": "^32.0.0",
     "hammerjs": "^2.0.8",
     "minipass": "^2.3.3",
     "rxjs": "^6.0.0",

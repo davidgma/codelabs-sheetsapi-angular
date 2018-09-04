@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HelloComponent } from './hello.component';
 import { AppRoutingModule } from './app-routing.module';
-import { DataService } from './data.service';
+import { DataService } from './services/data.service';
 import { AlasqlDemoRoutingModule } from './alasql-demo/alasql-demo-routing.module';
 import { AlasqlDemoComponent } from './alasql-demo/alasql-demo.component';
 import { PageNotFoundComponent } from './not-found.component';
@@ -28,6 +28,10 @@ import {
   
  } from '@angular/material';
 import { OrderEditComponent } from './order-edit/order-edit.component';
+import { GoogleService } from './google/google.service';
+import { GoogleComponent } from './google/google.component';
+import { GoogleRoutingModule } 
+from './google/google-routing.module';
 
 @NgModule({
   imports: [
@@ -45,6 +49,7 @@ import { OrderEditComponent } from './order-edit/order-edit.component';
     OrderEditRoutingModule,
     AlasqlDemoRoutingModule,
     AboutRoutingModule,
+    GoogleRoutingModule,
     AppRoutingModule
   ],
   declarations: [
@@ -54,10 +59,11 @@ import { OrderEditComponent } from './order-edit/order-edit.component';
     PageNotFoundComponent,
     OrdersComponent,
     AboutComponent,
-    OrderEditComponent
+    OrderEditComponent,
+    GoogleComponent
   ],
   bootstrap: [AppComponent],
-  providers: [DataService]
+  providers: [DataService, GoogleService]
 })
 export class AppModule {
   // Diagnostic only: inspect router configuration

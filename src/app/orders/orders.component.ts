@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as alasql from 'alasql';
 import { Observable } from "rxjs";
-import { DataService } from '../data.service';
+import { DataService } from '../services/data.service';
 import { Order } from './order';
 import { Router } from '@angular/router';
 

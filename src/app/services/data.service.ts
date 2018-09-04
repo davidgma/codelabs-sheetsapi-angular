@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
 import { Observable, of, from } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { Order } from './orders/order';
+import { Order } from '../orders/order';
 
-import { JsonOrders } from '../assets/json-orders';
+import { JsonOrders } from '../../assets/json-orders';
 
 @Injectable()
 export class DataService {

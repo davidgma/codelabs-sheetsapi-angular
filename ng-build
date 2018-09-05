@@ -8,5 +8,5 @@ ng build --base-href "https://davidgma.github.io/codelabs-sheetsapi-angular/"
 git add *
 git commit -a -m "Test without ngh each time."
 git push
-#ngh
+ngh
 # Website https://davidgma.github.io/codelabs-sheetsapi-angular

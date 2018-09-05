@@ -1,35 +1,43 @@
-// From https://github.com/rubenCodeforges/ng-gapi/blob/master/src/GoogleApiService.ts
+// This is a version of google-data-service that doesn't use RxJS
+// The import code came from https://github.com/rubenCodeforges/ng-gapi/blob/master/src/GoogleApiService.ts
 
 import { Injectable } from '@angular/core';
-import { Observable } from "rxjs";
-import { Observer } from "rxjs";
+import { GoogleData } from './google-data';
 
 @Injectable()
 export class GoogleService {
 
-  private readonly gapiUrl: string =
-  'https://apis.google.com/js/platform.js';
+  public data: GoogleData;
+  private promises = new Array<Promise<void>>();
+  public googleUser: any;
 
   constructor() {
+    let p1 = new Promise<void>((resolve) => {
+      // Listen to the onSignIn event from the html data-onsuccess="onSignIn"
+      window["onSignIn"] = (googleUser) => {
+        this.googleUser = googleUser;
+        resolve();
+      };
+    });
+    this.promises.push(p1);
   }
 
-  public loadGapi(): Observable<void> {
-    return Observable.create(
-      (observer: Observer<boolean>) => {
-        let node = document.createElement('script');
-        node.src = this.gapiUrl;
-        node.type = 'text/javascript';
-        node.charset = 'utf-8';
-        document.getElementsByTagName('head')[0]
-          .appendChild(node);
-        node.onload = () => {
-          observer.next(true);
-          observer.complete();
-        };
+  public getGoogleData(): Promise<GoogleData> {
+    let p = new Promise<GoogleData>((resolve) => {
+      // Wait until there is data
+      Promise.all(this.promises).then(() => {
+        let gd = new GoogleData();
+        gd.googleUser = this.googleUser;
+        gd.profile = this.googleUser.getBasicProfile();
+        gd.id_token = this.googleUser.getAuthResponse().id_token;
+        console.log('Full Name: ' + gd.profile.getName());
+        resolve(gd);
       });
+    });
+    return p;
   }
 
-  
+
   /* OLD
   public haveAuth = false;
   public client_id =
@@ -82,5 +90,5 @@ export class GoogleService {
     });
   }
  */
-  
+
 }

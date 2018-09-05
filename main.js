@@ -580,6 +580,46 @@ var AppModule = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/google/google-data.ts":
+/*!***************************************!*\
+  !*** ./src/app/google/google-data.ts ***!
+  \***************************************/
+/*! exports provided: GoogleData */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GoogleData", function() { return GoogleData; });
+var GoogleData = /** @class */ (function () {
+    function GoogleData() {
+        this.profile = null;
+        this.id_token = "";
+    }
+    GoogleData.prototype.toString = function () {
+        var ret = "";
+        if (this.profile == null) {
+            return "You are not connected";
+        }
+        else {
+            ret += "ID: " + this.profile.getId() + ". ";
+            //console.log('Full Name: ' + this.profile.getName());
+            console.log('Given Name: ' + this.profile.getGivenName());
+            console.log('Family Name: ' + this.profile.getFamilyName());
+            console.log("Image URL: " + this.profile.getImageUrl());
+            console.log("Email: " + this.profile.getEmail());
+        }
+        if (this.id_token.length != 0) {
+            console.log("ID Token: " + this.id_token);
+        }
+        return ret;
+    };
+    return GoogleData;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/google/google-routing.module.ts":
 /*!*************************************************!*\
   !*** ./src/app/google/google-routing.module.ts ***!
@@ -644,7 +684,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n\n<br>\n<div class=\"g-signin2\" data-onsuccess=\"onSignIn\" \ndata-theme=\"dark\">\n<br>\n</div>\n<p>\n    The Google Sign-in button should appear above here.\n</p>"
+module.exports = "<br>\n\n<div class=\"g-signin2\" data-onsuccess=\"onSignIn\" data-theme=\"dark\">\n    <br>\n</div>\n<p>\n    The Google Sign-in button should appear above.\n</p>\n<section *ngIf=\"googleData!=null;else noAuth\">\n    <p>The following information was retrieved from your Google account:</p>\n    <p>\n        Name: {{ googleData.profile.getName() }}<br> ID: {{ googleData.profile.getId() }}<br> Given Name: {{ googleData.profile.getGivenName()}}<br>        Family\n        Name: {{ googleData.profile.getFamilyName() }}<br> Email address: {{ googleData.profile.getEmail() }}<br>\n    </p>\n</section>\n<ng-template #noAuth>\n    <p>Not logged in.</p>\n</ng-template>"
 
 /***/ }),
 
@@ -672,15 +712,30 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var GoogleComponent = /** @class */ (function () {
-    function GoogleComponent(googleService) {
-        this.googleService = googleService;
+    function GoogleComponent(data) {
+        this.data = data;
+        // This is the Google javascript API file we want to load.
+        this.javascriptFile = "https://apis.google.com/js/platform.js";
+        this.googleData = null;
     }
     GoogleComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.googleService.loadGapi().subscribe();
-        window.onSignIn = function (googleUser) { return _this.onSignIn(googleUser); };
+        console.log("Loading the javascript API file.");
+        var node = document.createElement('script');
+        node.src = this.javascriptFile;
+        node.type = 'text/javascript';
+        node.charset = 'utf-8';
+        document.getElementsByTagName('head')[0]
+            .appendChild(node);
+        node.onload = function () {
+            console.log("The javascript file has been loaded.");
+            _this.data.getGoogleData().then(function (data) {
+                _this.googleData = data;
+                _this.showInfo(data.googleUser);
+            });
+        };
     };
-    GoogleComponent.prototype.onSignIn = function (googleUser) {
+    GoogleComponent.prototype.showInfo = function (googleUser) {
         // Useful data for your client-side scripts:
         var profile = googleUser.getBasicProfile();
         console.log("ID: " + profile.getId());
@@ -720,8 +775,9 @@ var GoogleComponent = /** @class */ (function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GoogleService", function() { return GoogleService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-// From https://github.com/rubenCodeforges/ng-gapi/blob/master/src/GoogleApiService.ts
+/* harmony import */ var _google_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./google-data */ "./src/app/google/google-data.ts");
+// This is a version of google-data-service that doesn't use RxJS
+// The import code came from https://github.com/rubenCodeforges/ng-gapi/blob/master/src/GoogleApiService.ts
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -735,22 +791,31 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 var GoogleService = /** @class */ (function () {
     function GoogleService() {
-        this.gapiUrl = 'https://apis.google.com/js/platform.js';
-    }
-    GoogleService.prototype.loadGapi = function () {
         var _this = this;
-        return rxjs__WEBPACK_IMPORTED_MODULE_1__["Observable"].create(function (observer) {
-            var node = document.createElement('script');
-            node.src = _this.gapiUrl;
-            node.type = 'text/javascript';
-            node.charset = 'utf-8';
-            document.getElementsByTagName('head')[0]
-                .appendChild(node);
-            node.onload = function () {
-                observer.next(true);
-                observer.complete();
+        this.promises = new Array();
+        var p1 = new Promise(function (resolve) {
+            // Listen to the onSignIn event from the html data-onsuccess="onSignIn"
+            window["onSignIn"] = function (googleUser) {
+                _this.googleUser = googleUser;
+                resolve();
             };
         });
+        this.promises.push(p1);
+    }
+    GoogleService.prototype.getGoogleData = function () {
+        var _this = this;
+        var p = new Promise(function (resolve) {
+            // Wait until there is data
+            Promise.all(_this.promises).then(function () {
+                var gd = new _google_data__WEBPACK_IMPORTED_MODULE_1__["GoogleData"]();
+                gd.googleUser = _this.googleUser;
+                gd.profile = _this.googleUser.getBasicProfile();
+                gd.id_token = _this.googleUser.getAuthResponse().id_token;
+                console.log('Full Name: ' + gd.profile.getName());
+                resolve(gd);
+            });
+        });
+        return p;
     };
     GoogleService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
@@ -1074,7 +1139,7 @@ var OrdersRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".fill-remaining-space {\n  /* This fills the remaining space, by using flexbox. \n     Every toolbar row uses a flexbox row layout. */\n  flex: 1 1 auto;\n}\n.floating-box {\n    \n    display: inline-block;\n    width: 250px;\n    margin: 10px; \n    vertical-align: top;\n}\n.ordersToolbar {\n  color: black;\n  background-color: white;\n}\n.add-order-button {\n  color: red;\n}\n\n"
+module.exports = ".fill-remaining-space {\n  /* This fills the remaining space, by using flexbox. \n     Every toolbar row uses a flexbox row layout. */\n  flex: 1 1 auto;\n}\n.floating-box {\n    display: inline-block;\n    width: 250px;\n    margin: 10px; \n    vertical-align: top;\n}\n.ordersToolbar {\n  color: black;\n  background-color: rgb(40, 144, 241);\n  border-top-left-radius: 10px;\n  border-top-right-radius: 10px;\n}\n.add-order-button {\n  color: red;\n}\n.card-area {\n  background-color: rgb(231, 228, 228);\n  border-bottom-left-radius: 10px;\n  border-bottom-right-radius: 10px;\n}\n\n"
 
 /***/ }),
 
@@ -1085,7 +1150,7 @@ module.exports = ".fill-remaining-space {\n  /* This fills the remaining space, 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<br>\n<mat-toolbar class=\"ordersToolbar\" color=\"primary\">\n\t<p>Customer Order System</p>\n  <span class=\"fill-remaining-space\"></span>\n  <button class=\"add-order-button\" mat-icon-button matTooltip=\"Add\"\n  (click)=\"addNewOrder()\">\n\t<mat-icon>add\n\t</mat-icon>\n  </button>\n\t<button mat-icon-button matTooltip=\"Options\"\n  [matMenuTriggerFor]=\"optionsMenu\">\n\t<mat-icon>menu\n\t</mat-icon>\n  </button>\n  <mat-menu #optionsMenu=\"matMenu\">\n  <button (click)=\"sortByOrderNumber()\" \n  mat-menu-item>Sort by Order Number</button>\n  <button (click)=\"sortByPrice()\"\n  mat-menu-item>Sort by Price</button>\n</mat-menu>\n</mat-toolbar>\n\n<section>\n\n\t<div class=\"floating-box\" *ngFor=\"let order of orders\">\n\t\t<mat-card>\n\t\t\t<mat-card-header>\n\t\t\t\t<mat-card-title>Order #{{order.id}}\n\t\t\t\t</mat-card-title>\n\t\t\t</mat-card-header>\n\t\t\t<mat-card-content>\n\t\t\t\t<table mat-table class=\"order-details\">\n\t\t\t\t\t<tr>\n\t\t\t\t\t\t<th>Customer</th>\n\t\t\t\t\t\t<td>{{order.customerName}}</td>\n\t\t\t\t\t</tr>\n\t\t\t\t\t<tr>\n\t\t\t\t\t\t<th>Product code</th>\n\t\t\t\t\t\t<td>{{order.productCode}}</td>\n\t\t\t\t\t</tr>\n\t\t\t\t\t<tr>\n\t\t\t\t\t\t<th>Units ordered</th>\n\t\t\t\t\t\t<td>{{order.unitsOrdered}}</td>\n\t\t\t\t\t</tr>\n\t\t\t\t\t<tr>\n\t\t\t\t\t\t<th>Unit price (USD)</th>\n\t\t\t\t\t\t<td>{{order.unitPrice}}</td>\n\t\t\t\t\t</tr>\n\t\t\t\t\t<tr>\n\t\t\t\t\t\t<th>Status</th>\n\t\t\t\t\t\t<td>{{order.status}}</td>\n\t\t\t\t\t</tr>\n          <tr>\n\t\t\t\t\t\t<th>Created</th>\n\t\t\t\t\t\t<td>{{order.createdAt.toLocaleString('en-GB')}}</td>\n\t\t\t\t\t</tr>\n          <tr>\n\t\t\t\t\t\t<th>Updated</th>\n\t\t\t\t\t\t<td>{{order.updatedAt.toLocaleString('en-GB')}}</td>\n\t\t\t\t\t</tr>\n\t\t\t\t</table>\n\t\t\t</mat-card-content>\n\t\t\t<mat-card-actions>\n\t\t\t\t<button mat-icon-button matTooltip=\"Edit\"\n        [routerLink]=\"['/edit', order.id]\">\n      <mat-icon>edit\n        </mat-icon>\n      </button>\n\t\t\t\t<button mat-icon-button matTooltip=\"Delete\"\n        (click)=\"onDelete(order.id)\">\n      <mat-icon>delete\n        </mat-icon>\n        </button>\n\t\t\t</mat-card-actions>\n\t\t</mat-card>\n\t</div>\n</section>"
+module.exports = "<br>\n<mat-toolbar class=\"ordersToolbar\" color=\"primary\">\n\t<p>Customer Order System</p>\n  <span class=\"fill-remaining-space\"></span>\n  <button class=\"add-order-button\" mat-icon-button matTooltip=\"Add\"\n  (click)=\"addNewOrder()\">\n\t<mat-icon>add\n\t</mat-icon>\n  </button>\n\t<button mat-icon-button matTooltip=\"Options\"\n  [matMenuTriggerFor]=\"optionsMenu\">\n\t<mat-icon>menu\n\t</mat-icon>\n  </button>\n  <mat-menu #optionsMenu=\"matMenu\">\n  <button (click)=\"sortByOrderNumber()\" \n  mat-menu-item>Sort by Order Number</button>\n  <button (click)=\"sortByPrice()\"\n  mat-menu-item>Sort by Price</button>\n</mat-menu>\n</mat-toolbar>\n\n<section class=\"card-area\">\n\n\t<div class=\"floating-box\" *ngFor=\"let order of orders\">\n\t\t<mat-card>\n\t\t\t<mat-card-header>\n\t\t\t\t<mat-card-title>Order #{{order.id}}\n\t\t\t\t</mat-card-title>\n\t\t\t</mat-card-header>\n\t\t\t<mat-card-content>\n\t\t\t\t<table mat-table class=\"order-details\">\n\t\t\t\t\t<tr>\n\t\t\t\t\t\t<th>Customer</th>\n\t\t\t\t\t\t<td>{{order.customerName}}</td>\n\t\t\t\t\t</tr>\n\t\t\t\t\t<tr>\n\t\t\t\t\t\t<th>Product code</th>\n\t\t\t\t\t\t<td>{{order.productCode}}</td>\n\t\t\t\t\t</tr>\n\t\t\t\t\t<tr>\n\t\t\t\t\t\t<th>Units ordered</th>\n\t\t\t\t\t\t<td>{{order.unitsOrdered}}</td>\n\t\t\t\t\t</tr>\n\t\t\t\t\t<tr>\n\t\t\t\t\t\t<th>Unit price (USD)</th>\n\t\t\t\t\t\t<td>{{order.unitPrice}}</td>\n\t\t\t\t\t</tr>\n\t\t\t\t\t<tr>\n\t\t\t\t\t\t<th>Status</th>\n\t\t\t\t\t\t<td>{{order.status}}</td>\n\t\t\t\t\t</tr>\n          <tr>\n\t\t\t\t\t\t<th>Created</th>\n\t\t\t\t\t\t<td>{{order.createdAt.toLocaleString('en-GB')}}</td>\n\t\t\t\t\t</tr>\n          <tr>\n\t\t\t\t\t\t<th>Updated</th>\n\t\t\t\t\t\t<td>{{order.updatedAt.toLocaleString('en-GB')}}</td>\n\t\t\t\t\t</tr>\n\t\t\t\t</table>\n\t\t\t</mat-card-content>\n\t\t\t<mat-card-actions>\n\t\t\t\t<button mat-icon-button matTooltip=\"Edit\"\n        [routerLink]=\"['/edit', order.id]\">\n      <mat-icon>edit\n        </mat-icon>\n      </button>\n\t\t\t\t<button mat-icon-button matTooltip=\"Delete\"\n        (click)=\"onDelete(order.id)\">\n      <mat-icon>delete\n        </mat-icon>\n        </button>\n\t\t\t</mat-card-actions>\n\t\t</mat-card>\n\t</div>\n</section>"
 
 /***/ }),
 

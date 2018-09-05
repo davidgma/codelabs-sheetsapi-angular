@@ -3,4 +3,4 @@
 # The angular.json file should have the outputPath set to docs:
 # "outputPath": "docs",
 # The Github setting for pages should choose the docs folder.
-ng build --base-href "https://davidgma.github.io/codelabs-sheetsapi-angular" 
+ng build --base-href "https://davidgma.github.io/codelabs-sheetsapi-angular/" 

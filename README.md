@@ -42,7 +42,7 @@ npm update
 
 ## How I set up the Github Pages part.
 
-Github pages allows for the serving of the Angular files on the web. For example, this repository can be opened up with the address https://davidgma.github.io/codelabs-sheetsapi-angular.
+Github Pages allows for the serving of the Angular files on the web. For example, this repository can be opened up with the address https://davidgma.github.io/codelabs-sheetsapi-angular.
 
 It's tricky to set up, but fortunately there's a program that does almost everything for you: [angular-cli-ghpages](https://www.npmjs.com/package/angular-cli-ghpages). Leave the outputPath in the angular.json file set to dist (the default).
 

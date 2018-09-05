@@ -4,5 +4,8 @@
 # "outputPath": "dist",
 # The Github setting for pages should choose the gh-pages branch.
 # npm install -g angular-cli-ghpages
-ng build --base-href "https://davidgma.github.io/codelabs-sheetsapi-angular/" 
+ng build --base-href "https://davidgma.github.io/codelabs-sheetsapi-angular/"
+git add *
+git commit -m "Rebuild and publish."
+git push
 ngh

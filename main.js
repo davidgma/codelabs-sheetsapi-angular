@@ -644,7 +644,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n\n<br>\n<div class=\"g-signin2\" data-onsuccess=\"onSignIn\" \ndata-theme=\"dark\">\n<br>\n</div>\n<p>\n    google!\n</p>"
+module.exports = "\n\n<br>\n<div class=\"g-signin2\" data-onsuccess=\"onSignIn\" \ndata-theme=\"dark\">\n<br>\n</div>\n<p>\n    The Google Sign-in button should appear above.\n</p>"
 
 /***/ }),
 

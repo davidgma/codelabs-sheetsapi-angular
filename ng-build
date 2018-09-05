@@ -6,7 +6,7 @@
 # npm install -g angular-cli-ghpages
 ng build --base-href "https://davidgma.github.io/codelabs-sheetsapi-angular/"
 git add *
-git commit -m "Rebuild and publish."
+git commit -a -m "Rebuild and publish."
 git push
 ngh
 # Website https://davidgma.github.io/codelabs-sheetsapi-angular

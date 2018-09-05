@@ -1,6 +1,8 @@
 #!/bin/bash
 # The command to build the Angular project so that it can be served by Github pages.
-# The angular.json file should have the outputPath set to docs:
-# "outputPath": "docs",
-# The Github setting for pages should choose the docs folder.
+# The angular.json file should have the outputPath set to the standard dist directory:
+# "outputPath": "dist",
+# The Github setting for pages should choose the gh-pages branch.
+# npm install -g angular-cli-ghpages
 ng build --base-href "https://davidgma.github.io/codelabs-sheetsapi-angular/" 
+ngh

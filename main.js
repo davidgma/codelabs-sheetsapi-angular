@@ -684,7 +684,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<br>\n\n<div class=\"g-signin2\" data-onsuccess=\"onSignIn\" data-theme=\"dark\">\n    <br>\n</div>\n<p>\n    The Google Sign-in button should appear above.\n</p>\n<section *ngIf=\"googleData!=null;else noAuth\">\n    <p>The following information was retrieved from your Google account:</p>\n    <p>\n        Name: {{ googleData.profile.getName() }}<br> ID: {{ googleData.profile.getId() }}<br> Given Name: {{ googleData.profile.getGivenName()}}<br>        Family\n        Name: {{ googleData.profile.getFamilyName() }}<br> Email address: {{ googleData.profile.getEmail() }}<br>\n    </p>\n</section>\n<ng-template #noAuth>\n    <p>Not logged in.</p>\n</ng-template>"
+module.exports = "<br>\n\n<div class=\"g-signin2\" data-onsuccess=\"onSignIn\" data-theme=\"dark\">\n</div>\n<br>\n<button matTooltip=\"Sign out\" (click)=\"signOut()\">Sign out\n</button>\n<br>\n<p>\n    The Google Sign-in button should appear above.\n</p>\n<section *ngIf=\"googleData!=null;else noAuth\">\n    <p>The following information was retrieved from your Google account:</p>\n    <p>\n        Name: {{ googleData.profile.getName() }}<br> ID: {{ googleData.profile.getId() }}<br> Given Name: {{\n        googleData.profile.getGivenName()}}<br> Family\n        Name: {{ googleData.profile.getFamilyName() }}<br> Email address: {{ googleData.profile.getEmail() }}<br>\n    </p>\n</section>\n<ng-template #noAuth>\n    <p>Not logged in.</p>\n</ng-template>\n<p>Tables: {{ tables }}</p>"
 
 /***/ }),
 
@@ -700,6 +700,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GoogleComponent", function() { return GoogleComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _google_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./google.service */ "./src/app/google/google.service.ts");
+/* harmony import */ var alasql__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alasql */ "./node_modules/alasql/dist/alasql.min.js");
+/* harmony import */ var alasql__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(alasql__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _services_js_loader_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/js-loader.service */ "./src/app/services/js-loader.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -711,29 +714,33 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
+
 var GoogleComponent = /** @class */ (function () {
-    function GoogleComponent(data) {
+    function GoogleComponent(data, loader) {
         this.data = data;
+        this.loader = loader;
         // This is the Google javascript API file we want to load.
         this.javascriptFile = "https://apis.google.com/js/platform.js";
+        this.apiJsFile = "https://apis.google.com/js/api.js";
         this.googleData = null;
+        this.tables = "first string";
     }
     GoogleComponent.prototype.ngOnInit = function () {
         var _this = this;
         console.log("Loading the javascript API file.");
-        var node = document.createElement('script');
-        node.src = this.javascriptFile;
-        node.type = 'text/javascript';
-        node.charset = 'utf-8';
-        document.getElementsByTagName('head')[0]
-            .appendChild(node);
-        node.onload = function () {
+        this.loader.loadjs(this.javascriptFile).then(function () {
             console.log("The javascript file has been loaded.");
             _this.data.getGoogleData().then(function (data) {
                 _this.googleData = data;
                 _this.showInfo(data.googleUser);
+                _this.loader.loadjs(_this.apiJsFile).then(function () {
+                    _this.accessSpreadsheet();
+                });
             });
-        };
+        });
+        this.create_t_spreadsheets();
+        this.updateTables();
     };
     GoogleComponent.prototype.showInfo = function (googleUser) {
         // Useful data for your client-side scripts:
@@ -749,13 +756,57 @@ var GoogleComponent = /** @class */ (function () {
         var id_token = googleUser.getAuthResponse().id_token;
         console.log("ID Token: " + id_token);
     };
+    // Create the table to hold spreadsheets that are being worked on
+    GoogleComponent.prototype.create_t_spreadsheets = function () {
+        Object(alasql__WEBPACK_IMPORTED_MODULE_2__["promise"])("create table t_spreadsheets (id string primary key, "
+            + "sheet_id text number, name string);").then(function (data) {
+            console.log("create_t_spreadsheet finished successfully");
+        }, function (error) {
+            console.log("Error trying to create the spreadsheet: "
+                + error);
+        });
+    };
+    // updates the tables string with a list of tables from alasql
+    GoogleComponent.prototype.updateTables = function () {
+        var _this = this;
+        Object(alasql__WEBPACK_IMPORTED_MODULE_2__["promise"])("show tables").then(function (data) {
+            _this.tables = JSON.stringify(data);
+        });
+    };
+    GoogleComponent.prototype.signOut = function () {
+        // the following works but isn't needed:
+        //gapi.load("client", () => {
+        //  console.log("client loaded");
+        //});
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+            console.log('User signed out.');
+        });
+    };
+    GoogleComponent.prototype.accessSpreadsheet = function () {
+        console.log("Attempting to access a spreadsheet");
+        gapi.load("client", function () {
+            console.log("client loaded");
+            gapi.client.load('sheets', 'v4', function () {
+                console.log("sheets v4 loaded");
+                gapi.client.sheets.spreadsheets.values.get({
+                    spreadsheetId: "1q_ZTQm16d_nhtgVk9JWdXrhVpXXL2nBKnRVwhc29AH8",
+                    range: 'Daily!A3'
+                }).then(function (response) {
+                    console.log("Range retrieved."
+                        + response.result.values[0]);
+                });
+            });
+        });
+    };
     GoogleComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-google',
             template: __webpack_require__(/*! ./google.component.html */ "./src/app/google/google.component.html"),
             styles: [__webpack_require__(/*! ./google.component.css */ "./src/app/google/google.component.css")]
         }),
-        __metadata("design:paramtypes", [_google_service__WEBPACK_IMPORTED_MODULE_1__["GoogleService"]])
+        __metadata("design:paramtypes", [_google_service__WEBPACK_IMPORTED_MODULE_1__["GoogleService"],
+            _services_js_loader_service__WEBPACK_IMPORTED_MODULE_3__["JsLoaderService"]])
     ], GoogleComponent);
     return GoogleComponent;
 }());
@@ -1421,6 +1472,58 @@ var DataService = /** @class */ (function () {
         __metadata("design:paramtypes", [])
     ], DataService);
     return DataService;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/js-loader.service.ts":
+/*!***********************************************!*\
+  !*** ./src/app/services/js-loader.service.ts ***!
+  \***********************************************/
+/*! exports provided: JsLoaderService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "JsLoaderService", function() { return JsLoaderService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var JsLoaderService = /** @class */ (function () {
+    function JsLoaderService() {
+    }
+    JsLoaderService.prototype.loadjs = function (url) {
+        var p = new Promise(function (resolve) {
+            var node = document.createElement('script');
+            node.src = url;
+            node.type = 'text/javascript';
+            node.charset = 'utf-8';
+            document.getElementsByTagName('head')[0]
+                .appendChild(node);
+            node.onload = function () {
+                console.log("The javascript file " + url + " has been loaded.");
+                resolve();
+            };
+        });
+        return p;
+    };
+    JsLoaderService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [])
+    ], JsLoaderService);
+    return JsLoaderService;
 }());
 
 

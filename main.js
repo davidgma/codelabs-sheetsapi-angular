@@ -76,7 +76,7 @@ var AboutRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2Fib3V0L2Fib3V0LmNvbXBvbmVudC5jc3MifQ== */"
 
 /***/ }),
 
@@ -186,7 +186,7 @@ var AlasqlDemoRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2FsYXNxbC1kZW1vL2FsYXNxbC1kZW1vLmNvbXBvbmVudC5jc3MifQ== */"
 
 /***/ }),
 
@@ -346,6 +346,7 @@ var AlasqlDemoComponent = /** @class */ (function () {
     };
     AlasqlDemoComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            //selector: 'app-alasql-demo',
             template: __webpack_require__(/*! ./alasql-demo.component.html */ "./src/app/alasql-demo/alasql-demo.component.html"),
             styles: [__webpack_require__(/*! ./alasql-demo.component.css */ "./src/app/alasql-demo/alasql-demo.component.css")]
         }),
@@ -419,7 +420,7 @@ can be found in the LICENSE file at http://angular.io/license
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "p {\n  font-family: Lato;\n}"
+module.exports = "p {\n  font-family: Lato;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYXBwLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxrQkFBa0I7Q0FDbkIiLCJmaWxlIjoic3JjL2FwcC9hcHAuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbInAge1xuICBmb250LWZhbWlseTogTGF0bztcbn0iXX0= */"
 
 /***/ }),
 
@@ -673,7 +674,7 @@ var GoogleRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2dvb2dsZS9nb29nbGUuY29tcG9uZW50LmNzcyJ9 */"
 
 /***/ }),
 
@@ -1012,7 +1013,7 @@ var OrderEditRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".floating-box {\n    \n    display: inline-block;\n    width: 250px;\n    margin: 10px; \n    vertical-align: top;\n}"
+module.exports = ".floating-box {\n    \n    display: inline-block;\n    width: 250px;\n    margin: 10px; \n    vertical-align: top;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvb3JkZXItZWRpdC9vcmRlci1lZGl0LmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7O0lBRUksc0JBQXNCO0lBQ3RCLGFBQWE7SUFDYixhQUFhO0lBQ2Isb0JBQW9CO0NBQ3ZCIiwiZmlsZSI6InNyYy9hcHAvb3JkZXItZWRpdC9vcmRlci1lZGl0LmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuZmxvYXRpbmctYm94IHtcbiAgICBcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gICAgd2lkdGg6IDI1MHB4O1xuICAgIG1hcmdpbjogMTBweDsgXG4gICAgdmVydGljYWwtYWxpZ246IHRvcDtcbn0iXX0= */"
 
 /***/ }),
 
@@ -1190,7 +1191,7 @@ var OrdersRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".fill-remaining-space {\n  /* This fills the remaining space, by using flexbox. \n     Every toolbar row uses a flexbox row layout. */\n  flex: 1 1 auto;\n}\n.floating-box {\n    display: inline-block;\n    width: 250px;\n    margin: 10px; \n    vertical-align: top;\n}\n.ordersToolbar {\n  color: black;\n  background-color: rgb(40, 144, 241);\n  border-top-left-radius: 10px;\n  border-top-right-radius: 10px;\n}\n.add-order-button {\n  color: red;\n}\n.card-area {\n  background-color: rgb(231, 228, 228);\n  border-bottom-left-radius: 10px;\n  border-bottom-right-radius: 10px;\n}\n\n"
+module.exports = ".fill-remaining-space {\n  /* This fills the remaining space, by using flexbox. \n     Every toolbar row uses a flexbox row layout. */\n  flex: 1 1 auto;\n}\n.floating-box {\n    display: inline-block;\n    width: 250px;\n    margin: 10px; \n    vertical-align: top;\n}\n.ordersToolbar {\n  color: black;\n  background-color: rgb(40, 144, 241);\n  border-top-left-radius: 10px;\n  border-top-right-radius: 10px;\n}\n.add-order-button {\n  color: red;\n}\n.card-area {\n  background-color: rgb(231, 228, 228);\n  border-bottom-left-radius: 10px;\n  border-bottom-right-radius: 10px;\n}\n\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvb3JkZXJzL29yZGVycy5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0U7b0RBQ2tEO0VBQ2xELGVBQWU7Q0FDaEI7QUFDRDtJQUNJLHNCQUFzQjtJQUN0QixhQUFhO0lBQ2IsYUFBYTtJQUNiLG9CQUFvQjtDQUN2QjtBQUNEO0VBQ0UsYUFBYTtFQUNiLG9DQUFvQztFQUNwQyw2QkFBNkI7RUFDN0IsOEJBQThCO0NBQy9CO0FBRUQ7RUFDRSxXQUFXO0NBQ1o7QUFFRDtFQUNFLHFDQUFxQztFQUNyQyxnQ0FBZ0M7RUFDaEMsaUNBQWlDO0NBQ2xDIiwiZmlsZSI6InNyYy9hcHAvb3JkZXJzL29yZGVycy5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmZpbGwtcmVtYWluaW5nLXNwYWNlIHtcbiAgLyogVGhpcyBmaWxscyB0aGUgcmVtYWluaW5nIHNwYWNlLCBieSB1c2luZyBmbGV4Ym94LiBcbiAgICAgRXZlcnkgdG9vbGJhciByb3cgdXNlcyBhIGZsZXhib3ggcm93IGxheW91dC4gKi9cbiAgZmxleDogMSAxIGF1dG87XG59XG4uZmxvYXRpbmctYm94IHtcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gICAgd2lkdGg6IDI1MHB4O1xuICAgIG1hcmdpbjogMTBweDsgXG4gICAgdmVydGljYWwtYWxpZ246IHRvcDtcbn1cbi5vcmRlcnNUb29sYmFyIHtcbiAgY29sb3I6IGJsYWNrO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2IoNDAsIDE0NCwgMjQxKTtcbiAgYm9yZGVyLXRvcC1sZWZ0LXJhZGl1czogMTBweDtcbiAgYm9yZGVyLXRvcC1yaWdodC1yYWRpdXM6IDEwcHg7XG59XG5cbi5hZGQtb3JkZXItYnV0dG9uIHtcbiAgY29sb3I6IHJlZDtcbn1cblxuLmNhcmQtYXJlYSB7XG4gIGJhY2tncm91bmQtY29sb3I6IHJnYigyMzEsIDIyOCwgMjI4KTtcbiAgYm9yZGVyLWJvdHRvbS1sZWZ0LXJhZGl1czogMTBweDtcbiAgYm9yZGVyLWJvdHRvbS1yaWdodC1yYWRpdXM6IDEwcHg7XG59XG5cbiJdfQ== */"
 
 /***/ }),
 

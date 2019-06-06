@@ -1,5 +1,71 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["main"],{
 
+/***/ "./node_modules/raw-loader/index.js!./src/app/about/about.component.html":
+/*!**********************************************************************!*\
+  !*** ./node_modules/raw-loader!./src/app/about/about.component.html ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<p>\nThis is my attempt to follow the steps in the \n<a href=\"https://codelabs.developers.google.com/codelabs/sheets-api/#0\">Codelabs Google Sheets-API Tutorial.</a> The tutorial teaches how to use the Google Sheets-API to read Google Docs spreadsheets from a web application. It is based around Node, Express and Javascript but I think Angular and Typescript are much cooler so I wanted to use these technologies while going through the tutorial.\n</p>\n<p>\nThe tutorial uses an SQL database which is accessed via the npm package sqlite3. I tried using this but as far as I could tell it only works from within Node and not on the client-side. So I couldn't use it in Stackblitz as there is no Node server side so instead I used the npm package <a href=\"https://github.com/agershun/alasql\">Alasql</a> which does work on the client side. It took a certain amount of tinkering to get it to work and the section \n<a routerLink=\"/alasql-demo\" routerLinkActive=\"active\">\n\t\tAlaSql Demo</a>\n shows some simple examples of what works.\n</p>\n<p>\nI've actually had to abandon doing this in Stackblitz because, as far as I can tell, there is a fundamental security flaw with it. To use Google API's OAuth, you need to use a client secret key. When a user grants the app permission to access his/her personal data on Google Sheets, anyone with that secret key would be able to access that person's data in their own app. In Stackblitz, the secret key will always be visible to everyone because anyone can go in and view the source code. In an application built in VS Code on a local computer, the secret key would be kept hidden from the outside world and presumably would have to be excluded in any output to git. But I don't see how it would be possible in Stackblitz to keep the secret key secret.\n</p>\n<p>\nInstead, perhaps the way forward is to use Google Apps Script and the tool clasp which, as far as I can tell (I haven't tried it yet) allows you to write Typescript code and upload it to Google Apps Script. For Google Apps Script, I think, the secret key and other authorisation codes are kept behind the scenes and even the writer of the app script doesn't see it. \n</p>\n<p>I think that Stackblitz would be fine for instances where a Google Drive document or sheet that is shared with everyone needs to be accessed.\n</p>\n"
+
+/***/ }),
+
+/***/ "./node_modules/raw-loader/index.js!./src/app/alasql-demo/alasql-demo.component.html":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/raw-loader!./src/app/alasql-demo/alasql-demo.component.html ***!
+  \**********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<p></p>\n<div class=\"mdl-grid\" *ngIf=\"comments\">\n\t<section id=\"orders\" class=\"mdl-cell mdl-cell--8-col relative\" *ngFor=\"let comment of comments\">\n\t\t<div class=\"mdl-grid\">\n\t\t\t{{ comment }}\n\t\t</div>\n\t</section>\n\n</div>\n<p>Cities:</p>\n<div class=\"mdl-grid\" *ngIf=\"cities\">\n\t<section id=\"cities\" class=\"mdl-cell mdl-cell--8-col relative\" *ngFor=\"let city of cities\">\n\t\t<div class=\"mdl-grid\">\n\t\t\t{{ city }}\n\t\t</div>\n\t</section>\n</div>"
+
+/***/ }),
+
+/***/ "./node_modules/raw-loader/index.js!./src/app/app.component.html":
+/*!**************************************************************!*\
+  !*** ./node_modules/raw-loader!./src/app/app.component.html ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<hello name=\"{{ name }}\"></hello>\n\n<nav>\n\t<a routerLink=\"/orders\" routerLinkActive=\"active\">\n\t\tOrders</a>\n\t<a routerLink=\"/alasql-demo\" routerLinkActive=\"active\">\n\t\tAlaSql Demo</a>\n\t<a routerLink=\"/google\" routerLinkActive=\"active\">\n\t\tGoogle</a>\n\t<a routerLink=\"/about\" routerLinkActive=\"active\">\n\t\tAbout</a>\n</nav>\n\n\n<router-outlet></router-outlet>"
+
+/***/ }),
+
+/***/ "./node_modules/raw-loader/index.js!./src/app/google/google.component.html":
+/*!************************************************************************!*\
+  !*** ./node_modules/raw-loader!./src/app/google/google.component.html ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<br>\n\n<div class=\"g-signin2\" data-onsuccess=\"onSignIn\" data-theme=\"dark\">\n</div>\n<br>\n<button matTooltip=\"Sign out\" (click)=\"signOut()\">Sign out\n</button>\n<br>\n<p>\n    The Google Sign-in button should appear above.\n</p>\n<section *ngIf=\"googleData!=null;else noAuth\">\n    <p>The following information was retrieved from your Google account:</p>\n    <p>\n        Name: {{ googleData.profile.getName() }}<br> ID: {{ googleData.profile.getId() }}<br> Given Name: {{\n        googleData.profile.getGivenName()}}<br> Family\n        Name: {{ googleData.profile.getFamilyName() }}<br> Email address: {{ googleData.profile.getEmail() }}<br>\n    </p>\n</section>\n<ng-template #noAuth>\n    <p>Not logged in.</p>\n</ng-template>\n<p>Tables: {{ tables }}</p>"
+
+/***/ }),
+
+/***/ "./node_modules/raw-loader/index.js!./src/app/order-edit/order-edit.component.html":
+/*!********************************************************************************!*\
+  !*** ./node_modules/raw-loader!./src/app/order-edit/order-edit.component.html ***!
+  \********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<br>\n<mat-toolbar color=\"primary\">\n\t<p>Edit order #{{order.id}}</p>\n</mat-toolbar>\n<br>\n<section>\n\t<div class=\"floating-box\">\n\t\t<mat-card>\n\t\t\t<form>\n\t\t\t\t<mat-form-field>\n\t\t\t\t\t<input matInput placeholder=\"Customer Name\" [(ngModel)]=\"editedOrder.customerName\" name=\"customerName\">\n\t\t\t\t</mat-form-field>\n\t\t\t\t<mat-form-field>\n\t\t\t\t\t<input matInput placeholder=\"Product Code\" [(ngModel)]=\"editedOrder.productCode\" name=\"productCode\">\n\t\t\t\t</mat-form-field>\n\t\t\t\t<mat-form-field class=\"full-width\">\n\t\t\t\t\t<input matInput placeholder=\"Units Ordered\" [(ngModel)]=\"editedOrder.unitsOrdered\" name=\"unitsOrdered\">\n\t\t\t\t</mat-form-field>\n\t\t\t\t<mat-form-field class=\"full-width\">\n\t\t\t\t\t<input matInput placeholder=\"Unit Price\" [(ngModel)]=\"editedOrder.unitPrice\" name=\"unitPrice\">\n\t\t\t\t</mat-form-field>\n\t\t\t\t<mat-form-field class=\"full-width\">\n\t\t\t\t\t<input matInput placeholder=\"Status\" [(ngModel)]=\"editedOrder.status\" name=\"status\">\n\t\t\t\t</mat-form-field>\n\t\t\t</form>\n\t\t\t<mat-card-actions>\n\t\t\t\t<button (click)=\"onSubmit()\" mat-button matTooltip=\"Save\"\n        [routerLink]=\"['/orders']\">\n      <mat-icon>save\n        </mat-icon>\n      </button>\n      <button mat-button matTooltip=\"Cancel\" \n      [routerLink]=\"['/orders']\">\n      <mat-icon>cancel\n        </mat-icon>\n      </button>\n\t\t\t</mat-card-actions>\n\t\t</mat-card>\n\t</div>\n</section>"
+
+/***/ }),
+
+/***/ "./node_modules/raw-loader/index.js!./src/app/orders/orders.component.html":
+/*!************************************************************************!*\
+  !*** ./node_modules/raw-loader!./src/app/orders/orders.component.html ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<br>\n<mat-toolbar class=\"ordersToolbar\" color=\"primary\">\n\t<p>Customer Order System</p>\n  <span class=\"fill-remaining-space\"></span>\n  <button class=\"add-order-button\" mat-icon-button matTooltip=\"Add\"\n  (click)=\"addNewOrder()\">\n\t<mat-icon>add\n\t</mat-icon>\n  </button>\n\t<button mat-icon-button matTooltip=\"Options\"\n  [matMenuTriggerFor]=\"optionsMenu\">\n\t<mat-icon>menu\n\t</mat-icon>\n  </button>\n  <mat-menu #optionsMenu=\"matMenu\">\n  <button (click)=\"sortByOrderNumber()\" \n  mat-menu-item>Sort by Order Number</button>\n  <button (click)=\"sortByPrice()\"\n  mat-menu-item>Sort by Price</button>\n</mat-menu>\n</mat-toolbar>\n\n<section class=\"card-area\">\n\n\t<div class=\"floating-box\" *ngFor=\"let order of orders\">\n\t\t<mat-card>\n\t\t\t<mat-card-header>\n\t\t\t\t<mat-card-title>Order #{{order.id}}\n\t\t\t\t</mat-card-title>\n\t\t\t</mat-card-header>\n\t\t\t<mat-card-content>\n\t\t\t\t<table mat-table class=\"order-details\">\n\t\t\t\t\t<tr>\n\t\t\t\t\t\t<th>Customer</th>\n\t\t\t\t\t\t<td>{{order.customerName}}</td>\n\t\t\t\t\t</tr>\n\t\t\t\t\t<tr>\n\t\t\t\t\t\t<th>Product code</th>\n\t\t\t\t\t\t<td>{{order.productCode}}</td>\n\t\t\t\t\t</tr>\n\t\t\t\t\t<tr>\n\t\t\t\t\t\t<th>Units ordered</th>\n\t\t\t\t\t\t<td>{{order.unitsOrdered}}</td>\n\t\t\t\t\t</tr>\n\t\t\t\t\t<tr>\n\t\t\t\t\t\t<th>Unit price (USD)</th>\n\t\t\t\t\t\t<td>{{order.unitPrice}}</td>\n\t\t\t\t\t</tr>\n\t\t\t\t\t<tr>\n\t\t\t\t\t\t<th>Status</th>\n\t\t\t\t\t\t<td>{{order.status}}</td>\n\t\t\t\t\t</tr>\n          <tr>\n\t\t\t\t\t\t<th>Created</th>\n\t\t\t\t\t\t<td>{{order.createdAt.toLocaleString('en-GB')}}</td>\n\t\t\t\t\t</tr>\n          <tr>\n\t\t\t\t\t\t<th>Updated</th>\n\t\t\t\t\t\t<td>{{order.updatedAt.toLocaleString('en-GB')}}</td>\n\t\t\t\t\t</tr>\n\t\t\t\t</table>\n\t\t\t</mat-card-content>\n\t\t\t<mat-card-actions>\n\t\t\t\t<button mat-icon-button matTooltip=\"Edit\"\n        [routerLink]=\"['/edit', order.id]\">\n      <mat-icon>edit\n        </mat-icon>\n      </button>\n\t\t\t\t<button mat-icon-button matTooltip=\"Delete\"\n        (click)=\"onDelete(order.id)\">\n      <mat-icon>delete\n        </mat-icon>\n        </button>\n\t\t\t</mat-card-actions>\n\t\t</mat-card>\n\t</div>\n</section>"
+
+/***/ }),
+
 /***/ "./src/$$_lazy_route_resource lazy recursive":
 /*!**********************************************************!*\
   !*** ./src/$$_lazy_route_resource lazy namespace object ***!
@@ -80,17 +146,6 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 
 /***/ }),
 
-/***/ "./src/app/about/about.component.html":
-/*!********************************************!*\
-  !*** ./src/app/about/about.component.html ***!
-  \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<p>\nThis is my attempt to follow the steps in the \n<a href=\"https://codelabs.developers.google.com/codelabs/sheets-api/#0\">Codelabs Google Sheets-API Tutorial.</a> The tutorial teaches how to use the Google Sheets-API to read Google Docs spreadsheets from a web application. It is based around Node, Express and Javascript but I think Angular and Typescript are much cooler so I wanted to use these technologies while going through the tutorial.\n</p>\n<p>\nThe tutorial uses an SQL database which is accessed via the npm package sqlite3. I tried using this but as far as I could tell it only works from within Node and not on the client-side. So I couldn't use it in Stackblitz as there is no Node server side so instead I used the npm package <a href=\"https://github.com/agershun/alasql\">Alasql</a> which does work on the client side. It took a certain amount of tinkering to get it to work and the section \n<a routerLink=\"/alasql-demo\" routerLinkActive=\"active\">\n\t\tAlaSql Demo</a>\n shows some simple examples of what works.\n</p>\n<p>\nI've actually had to abandon doing this in Stackblitz because, as far as I can tell, there is a fundamental security flaw with it. To use Google API's OAuth, you need to use a client secret key. When a user grants the app permission to access his/her personal data on Google Sheets, anyone with that secret key would be able to access that person's data in their own app. In Stackblitz, the secret key will always be visible to everyone because anyone can go in and view the source code. In an application built in VS Code on a local computer, the secret key would be kept hidden from the outside world and presumably would have to be excluded in any output to git. But I don't see how it would be possible in Stackblitz to keep the secret key secret.\n</p>\n<p>\nInstead, perhaps the way forward is to use Google Apps Script and the tool clasp which, as far as I can tell (I haven't tried it yet) allows you to write Typescript code and upload it to Google Apps Script. For Google Apps Script, I think, the secret key and other authorisation codes are kept behind the scenes and even the writer of the app script doesn't see it. \n</p>\n<p>I think that Stackblitz would be fine for instances where a Google Drive document or sheet that is shared with everyone needs to be accessed.\n</p>\n"
-
-/***/ }),
-
 /***/ "./src/app/about/about.component.ts":
 /*!******************************************!*\
   !*** ./src/app/about/about.component.ts ***!
@@ -120,7 +175,7 @@ var AboutComponent = /** @class */ (function () {
     AboutComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-about',
-            template: __webpack_require__(/*! ./about.component.html */ "./src/app/about/about.component.html"),
+            template: __webpack_require__(/*! raw-loader!./about.component.html */ "./node_modules/raw-loader/index.js!./src/app/about/about.component.html"),
             styles: [__webpack_require__(/*! ./about.component.css */ "./src/app/about/about.component.css")]
         }),
         __metadata("design:paramtypes", [])
@@ -187,17 +242,6 @@ var AlasqlDemoRoutingModule = /** @class */ (function () {
 /***/ (function(module, exports) {
 
 module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2FsYXNxbC1kZW1vL2FsYXNxbC1kZW1vLmNvbXBvbmVudC5jc3MifQ== */"
-
-/***/ }),
-
-/***/ "./src/app/alasql-demo/alasql-demo.component.html":
-/*!********************************************************!*\
-  !*** ./src/app/alasql-demo/alasql-demo.component.html ***!
-  \********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<p></p>\n<div class=\"mdl-grid\" *ngIf=\"comments\">\n\t<section id=\"orders\" class=\"mdl-cell mdl-cell--8-col relative\" *ngFor=\"let comment of comments\">\n\t\t<div class=\"mdl-grid\">\n\t\t\t{{ comment }}\n\t\t</div>\n\t</section>\n\n</div>\n<p>Cities:</p>\n<div class=\"mdl-grid\" *ngIf=\"cities\">\n\t<section id=\"cities\" class=\"mdl-cell mdl-cell--8-col relative\" *ngFor=\"let city of cities\">\n\t\t<div class=\"mdl-grid\">\n\t\t\t{{ city }}\n\t\t</div>\n\t</section>\n</div>"
 
 /***/ }),
 
@@ -347,7 +391,7 @@ var AlasqlDemoComponent = /** @class */ (function () {
     AlasqlDemoComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             //selector: 'app-alasql-demo',
-            template: __webpack_require__(/*! ./alasql-demo.component.html */ "./src/app/alasql-demo/alasql-demo.component.html"),
+            template: __webpack_require__(/*! raw-loader!./alasql-demo.component.html */ "./node_modules/raw-loader/index.js!./src/app/alasql-demo/alasql-demo.component.html"),
             styles: [__webpack_require__(/*! ./alasql-demo.component.css */ "./src/app/alasql-demo/alasql-demo.component.css")]
         }),
         __metadata("design:paramtypes", [_services_data_service__WEBPACK_IMPORTED_MODULE_3__["DataService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
@@ -420,18 +464,7 @@ can be found in the LICENSE file at http://angular.io/license
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "p {\n  font-family: Lato;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYXBwLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxrQkFBa0I7Q0FDbkIiLCJmaWxlIjoic3JjL2FwcC9hcHAuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbInAge1xuICBmb250LWZhbWlseTogTGF0bztcbn0iXX0= */"
-
-/***/ }),
-
-/***/ "./src/app/app.component.html":
-/*!************************************!*\
-  !*** ./src/app/app.component.html ***!
-  \************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<hello name=\"{{ name }}\"></hello>\n\n<nav>\n\t<a routerLink=\"/orders\" routerLinkActive=\"active\">\n\t\tOrders</a>\n\t<a routerLink=\"/alasql-demo\" routerLinkActive=\"active\">\n\t\tAlaSql Demo</a>\n\t<a routerLink=\"/google\" routerLinkActive=\"active\">\n\t\tGoogle</a>\n\t<a routerLink=\"/about\" routerLinkActive=\"active\">\n\t\tAbout</a>\n</nav>\n\n\n<router-outlet></router-outlet>"
+module.exports = "p {\n  font-family: Lato;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYXBwLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxpQkFBaUI7QUFDbkIiLCJmaWxlIjoic3JjL2FwcC9hcHAuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbInAge1xuICBmb250LWZhbWlseTogTGF0bztcbn0iXX0= */"
 
 /***/ }),
 
@@ -460,7 +493,7 @@ var AppComponent = /** @class */ (function () {
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'my-app',
-            template: __webpack_require__(/*! ./app.component.html */ "./src/app/app.component.html"),
+            template: __webpack_require__(/*! raw-loader!./app.component.html */ "./node_modules/raw-loader/index.js!./src/app/app.component.html"),
             styles: [__webpack_require__(/*! ./app.component.css */ "./src/app/app.component.css")]
         })
     ], AppComponent);
@@ -678,17 +711,6 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 
 /***/ }),
 
-/***/ "./src/app/google/google.component.html":
-/*!**********************************************!*\
-  !*** ./src/app/google/google.component.html ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<br>\n\n<div class=\"g-signin2\" data-onsuccess=\"onSignIn\" data-theme=\"dark\">\n</div>\n<br>\n<button matTooltip=\"Sign out\" (click)=\"signOut()\">Sign out\n</button>\n<br>\n<p>\n    The Google Sign-in button should appear above.\n</p>\n<section *ngIf=\"googleData!=null;else noAuth\">\n    <p>The following information was retrieved from your Google account:</p>\n    <p>\n        Name: {{ googleData.profile.getName() }}<br> ID: {{ googleData.profile.getId() }}<br> Given Name: {{\n        googleData.profile.getGivenName()}}<br> Family\n        Name: {{ googleData.profile.getFamilyName() }}<br> Email address: {{ googleData.profile.getEmail() }}<br>\n    </p>\n</section>\n<ng-template #noAuth>\n    <p>Not logged in.</p>\n</ng-template>\n<p>Tables: {{ tables }}</p>"
-
-/***/ }),
-
 /***/ "./src/app/google/google.component.ts":
 /*!********************************************!*\
   !*** ./src/app/google/google.component.ts ***!
@@ -803,7 +825,7 @@ var GoogleComponent = /** @class */ (function () {
     GoogleComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-google',
-            template: __webpack_require__(/*! ./google.component.html */ "./src/app/google/google.component.html"),
+            template: __webpack_require__(/*! raw-loader!./google.component.html */ "./node_modules/raw-loader/index.js!./src/app/google/google.component.html"),
             styles: [__webpack_require__(/*! ./google.component.css */ "./src/app/google/google.component.css")]
         }),
         __metadata("design:paramtypes", [_google_service__WEBPACK_IMPORTED_MODULE_1__["GoogleService"],
@@ -1013,18 +1035,7 @@ var OrderEditRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".floating-box {\n    \n    display: inline-block;\n    width: 250px;\n    margin: 10px; \n    vertical-align: top;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvb3JkZXItZWRpdC9vcmRlci1lZGl0LmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7O0lBRUksc0JBQXNCO0lBQ3RCLGFBQWE7SUFDYixhQUFhO0lBQ2Isb0JBQW9CO0NBQ3ZCIiwiZmlsZSI6InNyYy9hcHAvb3JkZXItZWRpdC9vcmRlci1lZGl0LmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuZmxvYXRpbmctYm94IHtcbiAgICBcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gICAgd2lkdGg6IDI1MHB4O1xuICAgIG1hcmdpbjogMTBweDsgXG4gICAgdmVydGljYWwtYWxpZ246IHRvcDtcbn0iXX0= */"
-
-/***/ }),
-
-/***/ "./src/app/order-edit/order-edit.component.html":
-/*!******************************************************!*\
-  !*** ./src/app/order-edit/order-edit.component.html ***!
-  \******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<br>\n<mat-toolbar color=\"primary\">\n\t<p>Edit order #{{order.id}}</p>\n</mat-toolbar>\n<br>\n<section>\n\t<div class=\"floating-box\">\n\t\t<mat-card>\n\t\t\t<form>\n\t\t\t\t<mat-form-field>\n\t\t\t\t\t<input matInput placeholder=\"Customer Name\" [(ngModel)]=\"editedOrder.customerName\" name=\"customerName\">\n\t\t\t\t</mat-form-field>\n\t\t\t\t<mat-form-field>\n\t\t\t\t\t<input matInput placeholder=\"Product Code\" [(ngModel)]=\"editedOrder.productCode\" name=\"productCode\">\n\t\t\t\t</mat-form-field>\n\t\t\t\t<mat-form-field class=\"full-width\">\n\t\t\t\t\t<input matInput placeholder=\"Units Ordered\" [(ngModel)]=\"editedOrder.unitsOrdered\" name=\"unitsOrdered\">\n\t\t\t\t</mat-form-field>\n\t\t\t\t<mat-form-field class=\"full-width\">\n\t\t\t\t\t<input matInput placeholder=\"Unit Price\" [(ngModel)]=\"editedOrder.unitPrice\" name=\"unitPrice\">\n\t\t\t\t</mat-form-field>\n\t\t\t\t<mat-form-field class=\"full-width\">\n\t\t\t\t\t<input matInput placeholder=\"Status\" [(ngModel)]=\"editedOrder.status\" name=\"status\">\n\t\t\t\t</mat-form-field>\n\t\t\t</form>\n\t\t\t<mat-card-actions>\n\t\t\t\t<button (click)=\"onSubmit()\" mat-button matTooltip=\"Save\"\n        [routerLink]=\"['/orders']\">\n      <mat-icon>save\n        </mat-icon>\n      </button>\n      <button mat-button matTooltip=\"Cancel\" \n      [routerLink]=\"['/orders']\">\n      <mat-icon>cancel\n        </mat-icon>\n      </button>\n\t\t\t</mat-card-actions>\n\t\t</mat-card>\n\t</div>\n</section>"
+module.exports = ".floating-box {\n    \n    display: inline-block;\n    width: 250px;\n    margin: 10px; \n    vertical-align: top;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvb3JkZXItZWRpdC9vcmRlci1lZGl0LmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7O0lBRUkscUJBQXFCO0lBQ3JCLFlBQVk7SUFDWixZQUFZO0lBQ1osbUJBQW1CO0FBQ3ZCIiwiZmlsZSI6InNyYy9hcHAvb3JkZXItZWRpdC9vcmRlci1lZGl0LmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuZmxvYXRpbmctYm94IHtcbiAgICBcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gICAgd2lkdGg6IDI1MHB4O1xuICAgIG1hcmdpbjogMTBweDsgXG4gICAgdmVydGljYWwtYWxpZ246IHRvcDtcbn0iXX0= */"
 
 /***/ }),
 
@@ -1092,7 +1103,7 @@ var OrderEditComponent = /** @class */ (function () {
     OrderEditComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-order-edit',
-            template: __webpack_require__(/*! ./order-edit.component.html */ "./src/app/order-edit/order-edit.component.html"),
+            template: __webpack_require__(/*! raw-loader!./order-edit.component.html */ "./node_modules/raw-loader/index.js!./src/app/order-edit/order-edit.component.html"),
             styles: [__webpack_require__(/*! ./order-edit.component.css */ "./src/app/order-edit/order-edit.component.css")]
         }),
         __metadata("design:paramtypes", [_services_data_service__WEBPACK_IMPORTED_MODULE_2__["DataService"],
@@ -1191,18 +1202,7 @@ var OrdersRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".fill-remaining-space {\n  /* This fills the remaining space, by using flexbox. \n     Every toolbar row uses a flexbox row layout. */\n  flex: 1 1 auto;\n}\n.floating-box {\n    display: inline-block;\n    width: 250px;\n    margin: 10px; \n    vertical-align: top;\n}\n.ordersToolbar {\n  color: black;\n  background-color: rgb(40, 144, 241);\n  border-top-left-radius: 10px;\n  border-top-right-radius: 10px;\n}\n.add-order-button {\n  color: red;\n}\n.card-area {\n  background-color: rgb(231, 228, 228);\n  border-bottom-left-radius: 10px;\n  border-bottom-right-radius: 10px;\n}\n\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvb3JkZXJzL29yZGVycy5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0U7b0RBQ2tEO0VBQ2xELGVBQWU7Q0FDaEI7QUFDRDtJQUNJLHNCQUFzQjtJQUN0QixhQUFhO0lBQ2IsYUFBYTtJQUNiLG9CQUFvQjtDQUN2QjtBQUNEO0VBQ0UsYUFBYTtFQUNiLG9DQUFvQztFQUNwQyw2QkFBNkI7RUFDN0IsOEJBQThCO0NBQy9CO0FBRUQ7RUFDRSxXQUFXO0NBQ1o7QUFFRDtFQUNFLHFDQUFxQztFQUNyQyxnQ0FBZ0M7RUFDaEMsaUNBQWlDO0NBQ2xDIiwiZmlsZSI6InNyYy9hcHAvb3JkZXJzL29yZGVycy5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmZpbGwtcmVtYWluaW5nLXNwYWNlIHtcbiAgLyogVGhpcyBmaWxscyB0aGUgcmVtYWluaW5nIHNwYWNlLCBieSB1c2luZyBmbGV4Ym94LiBcbiAgICAgRXZlcnkgdG9vbGJhciByb3cgdXNlcyBhIGZsZXhib3ggcm93IGxheW91dC4gKi9cbiAgZmxleDogMSAxIGF1dG87XG59XG4uZmxvYXRpbmctYm94IHtcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gICAgd2lkdGg6IDI1MHB4O1xuICAgIG1hcmdpbjogMTBweDsgXG4gICAgdmVydGljYWwtYWxpZ246IHRvcDtcbn1cbi5vcmRlcnNUb29sYmFyIHtcbiAgY29sb3I6IGJsYWNrO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2IoNDAsIDE0NCwgMjQxKTtcbiAgYm9yZGVyLXRvcC1sZWZ0LXJhZGl1czogMTBweDtcbiAgYm9yZGVyLXRvcC1yaWdodC1yYWRpdXM6IDEwcHg7XG59XG5cbi5hZGQtb3JkZXItYnV0dG9uIHtcbiAgY29sb3I6IHJlZDtcbn1cblxuLmNhcmQtYXJlYSB7XG4gIGJhY2tncm91bmQtY29sb3I6IHJnYigyMzEsIDIyOCwgMjI4KTtcbiAgYm9yZGVyLWJvdHRvbS1sZWZ0LXJhZGl1czogMTBweDtcbiAgYm9yZGVyLWJvdHRvbS1yaWdodC1yYWRpdXM6IDEwcHg7XG59XG5cbiJdfQ== */"
-
-/***/ }),
-
-/***/ "./src/app/orders/orders.component.html":
-/*!**********************************************!*\
-  !*** ./src/app/orders/orders.component.html ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<br>\n<mat-toolbar class=\"ordersToolbar\" color=\"primary\">\n\t<p>Customer Order System</p>\n  <span class=\"fill-remaining-space\"></span>\n  <button class=\"add-order-button\" mat-icon-button matTooltip=\"Add\"\n  (click)=\"addNewOrder()\">\n\t<mat-icon>add\n\t</mat-icon>\n  </button>\n\t<button mat-icon-button matTooltip=\"Options\"\n  [matMenuTriggerFor]=\"optionsMenu\">\n\t<mat-icon>menu\n\t</mat-icon>\n  </button>\n  <mat-menu #optionsMenu=\"matMenu\">\n  <button (click)=\"sortByOrderNumber()\" \n  mat-menu-item>Sort by Order Number</button>\n  <button (click)=\"sortByPrice()\"\n  mat-menu-item>Sort by Price</button>\n</mat-menu>\n</mat-toolbar>\n\n<section class=\"card-area\">\n\n\t<div class=\"floating-box\" *ngFor=\"let order of orders\">\n\t\t<mat-card>\n\t\t\t<mat-card-header>\n\t\t\t\t<mat-card-title>Order #{{order.id}}\n\t\t\t\t</mat-card-title>\n\t\t\t</mat-card-header>\n\t\t\t<mat-card-content>\n\t\t\t\t<table mat-table class=\"order-details\">\n\t\t\t\t\t<tr>\n\t\t\t\t\t\t<th>Customer</th>\n\t\t\t\t\t\t<td>{{order.customerName}}</td>\n\t\t\t\t\t</tr>\n\t\t\t\t\t<tr>\n\t\t\t\t\t\t<th>Product code</th>\n\t\t\t\t\t\t<td>{{order.productCode}}</td>\n\t\t\t\t\t</tr>\n\t\t\t\t\t<tr>\n\t\t\t\t\t\t<th>Units ordered</th>\n\t\t\t\t\t\t<td>{{order.unitsOrdered}}</td>\n\t\t\t\t\t</tr>\n\t\t\t\t\t<tr>\n\t\t\t\t\t\t<th>Unit price (USD)</th>\n\t\t\t\t\t\t<td>{{order.unitPrice}}</td>\n\t\t\t\t\t</tr>\n\t\t\t\t\t<tr>\n\t\t\t\t\t\t<th>Status</th>\n\t\t\t\t\t\t<td>{{order.status}}</td>\n\t\t\t\t\t</tr>\n          <tr>\n\t\t\t\t\t\t<th>Created</th>\n\t\t\t\t\t\t<td>{{order.createdAt.toLocaleString('en-GB')}}</td>\n\t\t\t\t\t</tr>\n          <tr>\n\t\t\t\t\t\t<th>Updated</th>\n\t\t\t\t\t\t<td>{{order.updatedAt.toLocaleString('en-GB')}}</td>\n\t\t\t\t\t</tr>\n\t\t\t\t</table>\n\t\t\t</mat-card-content>\n\t\t\t<mat-card-actions>\n\t\t\t\t<button mat-icon-button matTooltip=\"Edit\"\n        [routerLink]=\"['/edit', order.id]\">\n      <mat-icon>edit\n        </mat-icon>\n      </button>\n\t\t\t\t<button mat-icon-button matTooltip=\"Delete\"\n        (click)=\"onDelete(order.id)\">\n      <mat-icon>delete\n        </mat-icon>\n        </button>\n\t\t\t</mat-card-actions>\n\t\t</mat-card>\n\t</div>\n</section>"
+module.exports = ".fill-remaining-space {\n  /* This fills the remaining space, by using flexbox. \n     Every toolbar row uses a flexbox row layout. */\n  flex: 1 1 auto;\n}\n.floating-box {\n    display: inline-block;\n    width: 250px;\n    margin: 10px; \n    vertical-align: top;\n}\n.ordersToolbar {\n  color: black;\n  background-color: rgb(40, 144, 241);\n  border-top-left-radius: 10px;\n  border-top-right-radius: 10px;\n}\n.add-order-button {\n  color: red;\n}\n.card-area {\n  background-color: rgb(231, 228, 228);\n  border-bottom-left-radius: 10px;\n  border-bottom-right-radius: 10px;\n}\n\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvb3JkZXJzL29yZGVycy5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0U7bURBQ2lEO0VBQ2pELGNBQWM7QUFDaEI7QUFDQTtJQUNJLHFCQUFxQjtJQUNyQixZQUFZO0lBQ1osWUFBWTtJQUNaLG1CQUFtQjtBQUN2QjtBQUNBO0VBQ0UsWUFBWTtFQUNaLG1DQUFtQztFQUNuQyw0QkFBNEI7RUFDNUIsNkJBQTZCO0FBQy9CO0FBRUE7RUFDRSxVQUFVO0FBQ1o7QUFFQTtFQUNFLG9DQUFvQztFQUNwQywrQkFBK0I7RUFDL0IsZ0NBQWdDO0FBQ2xDIiwiZmlsZSI6InNyYy9hcHAvb3JkZXJzL29yZGVycy5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmZpbGwtcmVtYWluaW5nLXNwYWNlIHtcbiAgLyogVGhpcyBmaWxscyB0aGUgcmVtYWluaW5nIHNwYWNlLCBieSB1c2luZyBmbGV4Ym94LiBcbiAgICAgRXZlcnkgdG9vbGJhciByb3cgdXNlcyBhIGZsZXhib3ggcm93IGxheW91dC4gKi9cbiAgZmxleDogMSAxIGF1dG87XG59XG4uZmxvYXRpbmctYm94IHtcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gICAgd2lkdGg6IDI1MHB4O1xuICAgIG1hcmdpbjogMTBweDsgXG4gICAgdmVydGljYWwtYWxpZ246IHRvcDtcbn1cbi5vcmRlcnNUb29sYmFyIHtcbiAgY29sb3I6IGJsYWNrO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2IoNDAsIDE0NCwgMjQxKTtcbiAgYm9yZGVyLXRvcC1sZWZ0LXJhZGl1czogMTBweDtcbiAgYm9yZGVyLXRvcC1yaWdodC1yYWRpdXM6IDEwcHg7XG59XG5cbi5hZGQtb3JkZXItYnV0dG9uIHtcbiAgY29sb3I6IHJlZDtcbn1cblxuLmNhcmQtYXJlYSB7XG4gIGJhY2tncm91bmQtY29sb3I6IHJnYigyMzEsIDIyOCwgMjI4KTtcbiAgYm9yZGVyLWJvdHRvbS1sZWZ0LXJhZGl1czogMTBweDtcbiAgYm9yZGVyLWJvdHRvbS1yaWdodC1yYWRpdXM6IDEwcHg7XG59XG5cbiJdfQ== */"
 
 /***/ }),
 
@@ -1394,7 +1394,7 @@ var OrdersComponent = /** @class */ (function () {
     OrdersComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-orders',
-            template: __webpack_require__(/*! ./orders.component.html */ "./src/app/orders/orders.component.html"),
+            template: __webpack_require__(/*! raw-loader!./orders.component.html */ "./node_modules/raw-loader/index.js!./src/app/orders/orders.component.html"),
             styles: [__webpack_require__(/*! ./orders.component.css */ "./src/app/orders/orders.component.css")]
         }),
         __metadata("design:paramtypes", [_services_data_service__WEBPACK_IMPORTED_MODULE_2__["DataService"],
